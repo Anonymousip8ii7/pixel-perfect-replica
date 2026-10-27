@@ -75,7 +75,7 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
   return data;
 }
 
-export async function fetchProducts(opts: { first?: number; query?: string; newest?: boolean } = {}) {
+export async function fetchProducts(opts: { first?: number; query?: string | undefined; newest?: boolean } = {}) {
   const data = await storefrontApiRequest(PRODUCTS_QUERY, {
     first: opts.first ?? 50,
     query: opts.query ?? null,
@@ -91,7 +91,7 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
   return p ? { node: p } : null;
 }
 
-export const productsQueryOptions = (opts: { first?: number; query?: string; newest?: boolean } = {}) => ({
+export const productsQueryOptions = (opts: { first?: number; query?: string | undefined; newest?: boolean } = {}) => ({
   queryKey: ["products", opts],
   queryFn: () => fetchProducts(opts),
 });
